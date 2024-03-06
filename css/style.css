@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body{
+    background-color: rgb(238, 249, 191);
+    font-family: "Roboto", sans-serif;
+}
+
+.top{
+    width: 100%;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 50px;
+}
+
+h1{
+    font-weight: 700;
+    font-size: 56px;
+    line-height: 66px;
+    color: #75B79E;
+}
+
+.cartas{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.carta{
+    background-color: #A7E9AF;
+    width: 117px;
+    height: 146px;
+    border-radius: 5px;
+    border: 1px solid #99CEA8;
+    margin-left: 18px;
+    margin-right: 18px;
+    margin-bottom: 35px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.carta > img{
+    width: 100px;
+    height: 100px;
+}
+
+@media (max-width: 600px) {
+    .carta {
+        width: 117px; /* Alterando a largura das cartas para se ajustar melhor em telas menores */
+        margin: 0 auto 20px; /* Centralizando as cartas e adicionando um espaçamento na parte inferior */
+    }
+}
