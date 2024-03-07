@@ -4,6 +4,8 @@ let segundaCartaVirada = null;
 let bloqueioClick = false;
 let jogadas = 0;
 let cartas = [];
+let segundos = 0
+let intervaloRelogio
 
 function jogo(){
     quantidade = prompt('Quantas cartas deseja receber?');
@@ -26,6 +28,7 @@ function jogo(){
     bloqueioClick = false;
     jogadas = 0;
     cartas = []; // Limpa o array de cartas
+    segundos = 0
     
 
     const images = [
@@ -61,8 +64,20 @@ function jogo(){
     // Adicionar as cartas ao elemento com a classe "cartas"
     document.querySelector('.cartas').innerHTML = cartas.join('');
 
-    // Função para lidar com o clique na carta
+    iniciarRelogio()
    
+}
+
+function iniciarRelogio(){
+    intervaloRelogio = setInterval(() => {
+        segundos++;
+        atualizarRelogio();
+    }, 1000);
+}
+
+function atualizarRelogio(){
+    const relogio = document.querySelector('.relogio');
+    relogio.innerHTML = `${segundos}`
 }
 
 function clicar(elemento) {
@@ -89,11 +104,18 @@ function clicar(elemento) {
                 // Verificar se todas as cartas foram viradas corretamente
                 if (document.querySelectorAll('.virada').length === cartas.length) {
                     setTimeout(() => {
-                        let reiniciar = prompt('Você ganhou em ' + jogadas + ' jogadas!\nDeseja jogar novamente? (sim/não)');
+                        let reiniciar = prompt(`Você ganhou em ${jogadas} jogadas e em ${segundos} segundos!
+
+                        Deseja jogar novamente? (sim/não)`);
                         if (reiniciar.toLowerCase() === 'sim') {
+                            clearInterval(intervaloRelogio)
+                            document.querySelector('.relogio').innerHTML = '0'
                             jogo(); // Reinicia o jogo
                         } else {
                             alert('Obrigado por jogar!');
+                            document.querySelector('.cartas').innerHTML = ''
+                            document.querySelector('.relogio').innerHTML = "0"
+                            clearInterval(intervaloRelogio)
                         }
                     }, 50);
                 }
