@@ -1,4 +1,8 @@
 let quantidade = prompt('Quantas cartas deseja receber?');
+let primeiraCartaVirada = null;
+let segundaCartaVirada = null;
+let bloqueioClick = false;
+let jogadas = 0;
 
 // Verifica se a quantidade de cartas é válida
 while (quantidade !== null && (quantidade % 2 !== 0 || quantidade < 4 || quantidade > 14)) {
@@ -48,9 +52,45 @@ document.querySelector('.cartas').innerHTML = cartas.join('');
 
 // Função para lidar com o clique na carta
 function clicar(elemento) {
-    if (elemento.classList.contains('virada')) {
-        elemento.classList.remove('virada');
-    } else {
-        elemento.classList.add('virada');
+    if (bloqueioClick) return; // Impede cliques enquanto as cartas estão sendo viradas
+
+    if (!elemento.classList.contains('virada')) {
+        jogadas++;
+
+        if (primeiraCartaVirada === null) {
+            // Virar a primeira carta
+            elemento.classList.add('virada');
+            primeiraCartaVirada = elemento;
+        } else if (segundaCartaVirada === null) {
+            // Virar a segunda carta
+            elemento.classList.add('virada');
+            segundaCartaVirada = elemento;
+
+            // Verificar se as cartas são iguais
+            if (primeiraCartaVirada.querySelector('.verso').src === segundaCartaVirada.querySelector('.verso').src) {
+                // Cartas iguais
+                primeiraCartaVirada = null;
+                segundaCartaVirada = null;
+                
+                // Verificar se todas as cartas foram viradas corretamente
+                if (document.querySelectorAll('.virada').length === cartas.length) {
+                    
+                    setTimeout(() => {
+                        alert(`Você ganhou em ${jogadas} jogadas!`);
+                    }, 50);
+
+                }
+            } else {
+                // Cartas diferentes
+                bloqueioClick = true;
+                setTimeout(() => {
+                    primeiraCartaVirada.classList.remove('virada');
+                    segundaCartaVirada.classList.remove('virada');
+                    primeiraCartaVirada = null;
+                    segundaCartaVirada = null;
+                    bloqueioClick = false;
+                }, 1000); // Aguarda 1 segundo antes de virar as cartas de volta
+            }
+        }
     }
 }
