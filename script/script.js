@@ -19,6 +19,7 @@ function jogo(){
     // Se o usuário cancelou, exiba uma mensagem
     if (quantidade === null) {
         alert("Opção não informada");
+        document.querySelector('.relogio').remove()
         return; // Retorna para evitar iniciar o jogo sem a quantidade de cartas
     }
 
@@ -114,7 +115,7 @@ function clicar(elemento) {
                         } else {
                             alert('Obrigado por jogar!');
                             document.querySelector('.cartas').innerHTML = ''
-                            document.querySelector('.relogio').innerHTML = "0"
+                            document.querySelector('.relogio').remove()
                             clearInterval(intervaloRelogio)
                         }
                     }, 50);
